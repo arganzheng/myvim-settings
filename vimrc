@@ -214,3 +214,10 @@ autocmd BufEnter *.erb,*.haml,*.htm,*.html,*.kid,*.php,*.rhtml,*.xml,*.xsd setlo
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+""" 
+"  Pathogen
+"  "
+"  """
+call pathogen#infect()
+
+
