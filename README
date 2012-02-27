@@ -58,7 +58,7 @@ h6. Esc键
 
 h6. @<Leader>@键：
 
-其实@<Leader>@键并不是固定的键盘上的一个键，它是vim的一个标识键，默认是转移符'\'，这个键也比较远，所以最好重新定义它。这个几乎没有争议——','是大家公认的替代者。
+其实<code><Leader></code>键并不是固定的键盘上的一个键，它是vim的一个标识键，默认是转移符'\'，这个键也比较远，所以最好重新定义它。这个几乎没有争议——','是大家公认的替代者。
 在你的.vimrc中增加这么一行配置项：
 <pre><code>
 " Set the value used for <leader> in mappings
@@ -67,7 +67,7 @@ let g:mapleader = ","
 
 但是个人觉得';'是个不错的选择，因为他不','更近，而且几乎也没有其他命令抢占它。最重要的是，vimperator就是用';'，这样两者可以统一起来。不过这个大家自己看着办吧，都成。
 
-','键也不是很好按，但是相对来说比'\'要好得多。让@<Leader>@键好按之后就可以好好利用它了（就像我们前面映射Ctrl键一样），可以用它来开启/关闭（toggle）不同的插件。这样的效果类似于vim的模式切换一样，相同的键就可以复用了。
+','键也不是很好按，但是相对来说比'\'要好得多。让<code><Leader></code>键好按之后就可以好好利用它了（就像我们前面映射Ctrl键一样），可以用它来开启/关闭（toggle）不同的插件。这样的效果类似于vim的模式切换一样，相同的键就可以复用了。
 Keybindings are great, but there's so many already in use that it's hard not to overwrite existing ones. Using the <Leader> key to define keybindings has been great. As examples, I mapped <Leader>m to toggle tasks, and <Leader><Tab> to invoke snipMate.
 
 
