@@ -23,7 +23,8 @@ filetype plugin indent on " Turns on filetype detection, plugin, indent
 " ensures we can have full spectrum of colors
 set t_Co=256
 
-syntax enable
+syntax on
+" set background=dark
 
 " Set the value used for <leader> in mappings
 let g:mapleader = ","
@@ -80,9 +81,13 @@ set autoindent  smartindent
 " Fix backspace indentation, allow backspacing over all in insert mode
 set backspace=indent,eol,start 
 
-" set noautowrite         " Don't automatically write the file
-set nobackup            " Don't create backup files
-set noswapfile          " Turn off annoying swapfiles
+
+" }}}
+" Backups {{{
+set directory=~/.vim/tmp/swap//   " swap files
+" set backupdir=~/.vim/tmp/backup// " backups
+set backup                        " enable backups
+set noswapfile                    " It's 2012, Vim.
 
 " Make the command line two lines high and change the statusline display to
 " " something that looks useful.
@@ -106,8 +111,9 @@ set number
 set wrap
 set textwidth=79
 set linebreak
+set showbreak=↪
 set formatoptions=qrn1
-set listchars+=precedes:<,extends:>
+
 if exists('+colorcolumn')
     set colorcolumn=85
 else
@@ -118,7 +124,7 @@ endif
 " TextMate uses. You might need to adjust your color scheme so they’re not too
 " distracting. This Vimcast has more information.
 set list
-set listchars=tab:▸\ ,eol:¬
+set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
 
 
 " Scrolling options
@@ -223,6 +229,10 @@ nmap <silent> <F6> :set number!<CR>
 
 " page down with <Space>
 nmap <space> <pagedown>
+
+" Easier to type, and I never use the default behavior.
+noremap H ^
+noremap L g_
 
 " I found it useful to have movement in the insert mode, like Emacs.
 " Keybindings for movement in insert mode, I use the emace line mode.
