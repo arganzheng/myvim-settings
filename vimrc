@@ -268,8 +268,19 @@ autocmd BufEnter *.erb,*.haml,*.htm,*.html,*.kid,*.php,*.rhtml,*.xml,*.xsd setlo
 
 """ 
 "  Pathogen
-"  "
-"  """
+"
+"""
 call pathogen#infect()
 
+"""
+" Yankring
+"
+"""
+nnoremap <silent> <F3> :YRShow<cr>
+inoremap <silent> <F3> <ESC>:YRShow<cr>
 
+"""
+" matchit
+"
+"""
+map <tab> %
