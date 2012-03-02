@@ -17,6 +17,20 @@ autocmd! bufwritepost .vimrc source! %
 
 set encoding=utf-8
 
+""" 
+"  Pathogen
+"
+"""
+" Enable pathogen bundles¬
+" See http://www.vim.org/scripts/script.php?script_id=2332¬
+" Put github plugins under .vim/bundle/ -- which allows keeping them updated¬
+" without having to do separate installation.¬
+" Call "filetype off" first to ensure that bundle ftplugins can be added to the¬
+" path before we re-enable it later in the vimrc.¬
+:filetype off
+call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
+
 filetype plugin indent on " Turns on filetype detection, plugin, indent
 
 " Color scheme
@@ -86,7 +100,7 @@ set backspace=indent,eol,start
 " Backups {{{
 set directory=~/.vim/tmp/swap//   " swap files
 " set backupdir=~/.vim/tmp/backup// " backups
-set backup                        " enable backups
+" set backup                        " enable backups
 set noswapfile                    " It's 2012, Vim.
 
 " Make the command line two lines high and change the statusline display to
@@ -266,11 +280,11 @@ autocmd BufEnter *.erb,*.haml,*.htm,*.html,*.kid,*.php,*.rhtml,*.xml,*.xsd setlo
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+
 """ 
-"  Pathogen
+"  pathogen
+"  See above
 "
-"""
-call pathogen#infect()
 
 """
 " Yankring
