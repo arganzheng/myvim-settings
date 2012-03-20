@@ -238,8 +238,11 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" use <F6> to toggle line numbers
-nmap <silent> <F6> :set number!<CR>
+" Toggle line numbers
+nmap <silent> <F4> :set number!<CR>
+
+" Toggle paste
+set pastetoggle=<F6>
 
 " page down with <Space>
 nmap <space> <pagedown>
@@ -253,9 +256,13 @@ noremap L g_
 imap <C-a> <Esc>I
 imap <C-e> <Esc>A
 
+" Emacs bindings in command line mode
+cnoremap <c-a> <home>
+cnoremap <c-e> <end>
+
 " visual shifting (does not exit Visual mode)
-vnoremap < <gv
-vnoremap > >gv 
+" vnoremap < <gv
+" vnoremap > >gv 
 
 " Generic highlight changes
 highlight Comment cterm=none ctermfg=Gray
