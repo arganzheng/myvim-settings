@@ -170,8 +170,11 @@ vnoremap / /\v
 set modeline            " Scan for modeline commands
 set modelines=4         " Scan 4 lines for modelines
 
-set tags=tags;/         " Search for the tags file upward.  Cool!
-                        " see :help file-searching
+" generate tags file for your system libraries, and ask your vim to load them
+set tags+=/usr/local/include/tags
+set tags+=/usr/include/tags
+" Search for the tags file upward.  Cool! see :help file-searching
+set tags+=tags;/
 
 set ttyfast             " assume a fast terminal connection
 
