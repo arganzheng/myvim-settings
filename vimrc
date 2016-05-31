@@ -1,6 +1,6 @@
-" Author: "arganzheng":http://blog.arganzheng.me
-" Weibo: arganzheng
-" Date: 2012-02-26
+" Author: [arganzheng](http://blog.arganzheng.me)
+" Date: 2012-02-26 
+" Update: 2016-05-31
 " Many thanks to:
 " 1. "zmievski":http://zmievski.org/2007/02/vim-for-php-programmers-slides-and-resources
 " 2. "Coming Home to Vim":http://stevelosh.com/blog/2010/09/coming-home-to-vim
@@ -15,25 +15,20 @@
 " Automatically reload .vimrc when changing
 autocmd! bufwritepost .vimrc source! %
 
+"""
+" [encoding](http://edyfox.codecarver.org/html/vim_fileencodings_detection.html)
+" 
+"""
 set encoding=utf-8
+" set fileencodings=ucs-bom,utf-8,gbk,gb18030,utf-16,big5,cp936,gb2312,iso-8859-1
+" set fileencoding=gbk
+" set termencoding=gbk
+
 
 """ 
-"  Pathogen
+" Color scheme
 "
 """
-" Enable pathogen bundles¬
-" See http://www.vim.org/scripts/script.php?script_id=2332¬
-" Put github plugins under .vim/bundle/ -- which allows keeping them updated¬
-" without having to do separate installation.¬
-" Call "filetype off" first to ensure that bundle ftplugins can be added to the¬
-" path before we re-enable it later in the vimrc.¬
-:filetype off
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
-
-filetype plugin indent on " Turns on filetype detection, plugin, indent
-
-" Color scheme
 " ensures we can have full spectrum of colors
 set t_Co=256
 
@@ -292,19 +287,33 @@ autocmd BufEnter *.erb,*.haml,*.htm,*.html,*.kid,*.php,*.rhtml,*.xml,*.xsd setlo
 
 
 """ 
-"  pathogen
-"  See above
+" vundle
 "
+"""
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+" vundle 管理的插件列表必须位于 vundle#begin() 和 vundle#end() 之间
+call vundle#begin()
 
-"""
-" Yankring
-"
-"""
-nnoremap <silent> <F3> :YRShow<cr>
-inoremap <silent> <F3> <ESC>:YRShow<cr>
+Plugin 'VundleVim/Vundle.vim'
+"" 主题风格
+Plugin 'tomasr/molokai' " 多彩 molokai
+Plugin 'acarapetis/vim-colors-github' " Github风格(只有light模式)
+Plugin 'vim-scripts/peaksea'
+" other Plugin goes here ...
+
+call vundle#end()
+filetype plugin indent on
+
+"" 配色方案
+set background=dark
+"colorscheme molokai
+colorscheme peaksea
+"colorscheme github
+
 
 """
 " matchit
 "
 """
-map <tab> %
+"map <tab> %
