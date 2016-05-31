@@ -12,8 +12,6 @@
 " Basic Setup - behaviour, filetypes, syntax
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Automatically reload .vimrc when changing
-autocmd! bufwritepost .vimrc source! %
 
 """
 " [encoding](http://edyfox.codecarver.org/html/vim_fileencodings_detection.html)
@@ -329,6 +327,8 @@ Plugin 'acarapetis/vim-colors-github' " Github风格(只有light模式)
 Plugin 'vim-scripts/peaksea'
 " other Plugin goes here ...
 
+Plugin 'octol/vim-cpp-enhanced-highlight'
+
 "" Fuzzy file, buffer, mru, tag, etc finder.
 Plugin 'ctrlpvim/ctrlp.vim'
 
@@ -341,6 +341,9 @@ Plugin 'majutsushi/tagbar'
 "
 """
 Plugin 'dyng/ctrlsf.vim'
+
+"" 文档目录大纲
+Plugin 'scrooloose/nerdtree'
 
 "" commeter
 Plugin 'scrooloose/nerdcommenter'
@@ -430,6 +433,22 @@ let g:tagbar_type_cpp = {
      \ }
 \ }
 
+"""
+" NERDTree
+"
+"""
+" 使用 NERDTree 插件查看工程文件
+nmap <Leader>nt :NERDTreeToggle<CR>
+" 设置NERDTree子窗口宽度
+let NERDTreeWinSize=32
+" 设置NERDTree子窗口位置
+" let NERDTreeWinPos="right"
+" 显示隐藏文件
+let NERDTreeShowHidden=1
+" NERDTree 子窗口中不显示冗余帮助信息
+let NERDTreeMinimalUI=1
+" 删除文件时自动删除文件对应 buffer
+let NERDTreeAutoDeleteBuffer=1
 
 """
 " nerdcommenter
