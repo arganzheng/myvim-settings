@@ -1,0 +1,450 @@
+" Author: [arganzheng](http://blog.arganzheng.me)
+" Date: 2012-02-26 
+" Update: 2016-05-31
+" Many thanks to:
+" 1. "zmievski":http://zmievski.org/2007/02/vim-for-php-programmers-slides-and-resources
+" 2. "Coming Home to Vim":http://stevelosh.com/blog/2010/09/coming-home-to-vim
+" 3. "Kevin McCarthy":http://www.8t8.us/
+" 4. "mwop":http://ggmwop.net/blog/249-Vim-Toolbox,-2010-Edition
+" 5. "Mir Nazim":http://mirnazim.org/writings/vim-plugins-i-use/
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Basic Setup - behaviour, filetypes, syntax
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Automatically reload .vimrc when changing
+autocmd! bufwritepost .vimrc source! %
+
+"""
+" [encoding](http://edyfox.codecarver.org/html/vim_fileencodings_detection.html)
+" 
+"""
+set encoding=utf-8
+" set fileencodings=ucs-bom,utf-8,gbk,gb18030,utf-16,big5,cp936,gb2312,iso-8859-1
+" set fileencoding=gbk
+" set termencoding=gbk
+
+
+""" 
+" Color scheme
+"
+"""
+" ensures we can have full spectrum of colors
+set t_Co=256
+
+syntax on
+" set background=dark
+
+" Set the value used for <leader> in mappings
+let g:mapleader = ","
+
+" The escape key is a long ways away. This maps it to the sequence 'jj'
+:map! jj <esc>
+
+" Similarly, : takes two keystrokes, ; takes one; map the latter to the former
+" in normal mode to get to the commandline faster
+nnoremap ; :
+
+
+" This will disable the arrow keys while you’re in normal mode to help you learn to 
+" use hjkl. Trust me, you want to learn to use hjkl. Playing a lot of Nethack also helps.
+
+" It also disables the arrow keys in insert mode to force you to get back into normal
+" mode the instant you’re done inserting text, which is the “right way” to do things.
+
+" It also makes j and k work the way you expect instead of working in some archaic 
+" "movement by file line instead of screen line" fashion.
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+nnoremap j gj
+nnoremap k gk
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" General settings
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set nocompatible        " Use Vim defaults (much better!)
+
+"" Tab Settings. I like tabstops of 4, and prefer spaces to tabs.
+set expandtab           
+set tabstop=4
+set softtabstop=4
+
+"" Added 2005-03-23 Based on http://www.perlmonks.org/index.pl?node_id=441738
+set smarttab  " Tab in front of line uses shiftwidth - good for coding
+
+" Round indent to multiple of 'shiftwidth' for > and < commands
+set shiftround
+" Use 4 spaces for (auto)indent
+set shiftwidth=4
+ 
+" Go with smartindent if there is no plugin indent file.
+set autoindent  smartindent
+
+" Fix backspace indentation, allow backspacing over all in insert mode
+set backspace=indent,eol,start 
+
+
+" }}}
+" Backups {{{
+set directory=~/.vim/tmp/swap//   " swap files
+" set backupdir=~/.vim/tmp/backup// " backups
+" set backup                        " enable backups
+set noswapfile                    " It's 2012, Vim.
+
+" Make the command line two lines high and change the statusline display to
+" " something that looks useful.
+set cmdheight=2         
+set laststatus=2 " Always show status bar
+
+" Go back to the position the cursor was on the last time this file was edited
+au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")|execute("normal `\"")|endif
+
+set showmode            " Show mode I'm in
+
+" Show (partial) commands (or size of selection in Visual mode) in the status line
+set showcmd        
+
+set ruler               " Show cursor location
+"set number 			" actually I can see it in the status line
+set relativenumber		" it tells me what number I need to use with motion commands like d<NUMBER>d.
+set undofile
+
+" I want the text width to be 79, and for it to wrap. 
+" These lines manage my line wrapping settings and also show a colored column at
+" 85 characters (so I can see when I write a too-long line of code).
+set wrap
+set textwidth=79
+set linebreak
+set showbreak=↪
+set formatoptions=qrn1
+
+if exists('+colorcolumn')
+    set colorcolumn=85
+else
+    au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>85v.\+', -1)
+endif
+
+" This makes Vim show invisible characters with the same characters that
+" TextMate uses. You might need to adjust your color scheme so they’re not too
+" distracting. This Vimcast has more information.
+"set list
+"set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
+
+
+" Scrolling options
+set scrolloff=3 " Keep some 3 more lines for scope
+
+" Better Search
+" highlight results of a search
+set hlsearch
+set incsearch
+
+" Make case-insensitive search the norm
+set ignorecase
+set smartcase
+
+" When a bracket is inserted, briefly jump to a matching one
+set showmatch " Show matching brace
+
+" Turn on "very magic" regex status by default for searches.
+" :he /magic for more information
+" fix Vim’s horribly broken default regex “handling” by
+" automatically inserting a \v before any string you search for. This turns off
+" Vim’s crazy default regex characters and makes searches use normal regexes. I
+" already know Perl/Python compatible regex formatting, why would I want to
+" learn another scheme?
+nnoremap / /\v
+vnoremap / /\v
+
+" Turn on modelines
+set modeline            " Scan for modeline commands
+set modelines=4         " Scan 4 lines for modelines
+
+" generate tags file for your system libraries, and ask your vim to load them
+set tags+=/usr/local/include/tags
+set tags+=/usr/include/tags
+" Search for the tags file upward.  Cool! see :help file-searching
+set tags+=tags;/
+
+set ttyfast             " assume a fast terminal connection
+
+" Ignore certain types of files on completion
+set wildignore+=*.o,*.obj,*.pyc,.git
+
+" Remember things between sessions
+"
+" '20  - remember marks for 20 previous files
+" \"50 - save 50 lines for each register
+" :20  - remember 20 items in command-line history 
+" %    - remember the buffer list (if vim started without a file arg)
+" n    - set name of viminfo file
+set viminfo='20,\"50,:20,%,n~/.viminfo
+
+" Use menu to show command-line completion (in 'full' case)
+set wildmenu          
+
+" Set command-line completion mode:
+"   - on first <Tab>, when more than one match, list all matches and complete
+"     the longest common  string
+"   - on second <Tab>, complete the next full match and show menu
+set wildmode=list:longest,full
+
+set winminheight=0      " Allow windows to get fully squashed
+set winminwidth=0       " Allow windows to get fully squashed
+
+" "Hidden" buffers -- i.e., don't require saving before editing another file.
+" Calling quit will prompt you to save unsaved buffers anyways.
+set hidden
+
+" Code Folding, everything folded by default
+set foldmethod=indent
+set foldlevel=99
+set foldenable
+
+" Allow better terminal/mouse integration
+set mousemodel=extend
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" My various  maps, settings, and autocmds, and tips:)
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" gdefault applies substitutions globally on lines. 
+" For example, instead of :%s/foo/bar/g you just type :%s/foo/bar/. 
+set gdefault
+
+" make the tab key match bracket pairs. 
+" I use this to move around all the time and <tab> is a hell of a lot easier to type than %.
+nnoremap <tab> %
+vnoremap <tab> %
+
+" save changes
+map <Leader>s :w<CR>
+" exit vim without saving any changes
+map <Leader>q :q!<CR>
+" exit vim saving changes
+map <Leader>w :x<CR>
+
+" "sudo" save:
+:cmap w!! w !sudo tee % >/dev/null
+
+" Split window management
+" open a new vertical split and switch over to it.
+nnoremap <leader>w <C-w>v<C-w>l 
+" open a new horizontal split but not switch over to it. 
+nnoremap <leader>W <C-w>s
+
+""" 
+" Windows
+"
+" use <ctrl> plus direction key to move around within windows
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+noremap <leader>v <C-w>v
+
+"" Window Resizing
+" right/up : bigger
+" left/down : smaller
+nnoremap <m-right> :vertical resize +3<cr>
+nnoremap <m-left> :vertical resize -3<cr>
+nnoremap <m-up> :resize +3<cr>
+nnoremap <m-down> :resize -3<cr>
+
+" remap U to <C-r> for easier redo
+nnoremap U <C-r>
+
+" Toggle line numbers
+nmap <silent> <F4> :set number!<CR>
+
+" Toggle paste
+set pastetoggle=<F6>
+
+" page down with <Space>
+nmap <space> <pagedown>
+
+" Easier to type, and I never use the default behavior.
+noremap H ^
+noremap L g_
+vnoremap L g_
+
+" I found it useful to have movement in the insert mode, like Emacs.
+" Keybindings for movement in insert mode, I use the emace line mode.
+imap <C-a> <Esc>I
+imap <C-e> <Esc>A
+
+" Emacs bindings in command line mode
+cnoremap <c-a> <home>
+cnoremap <c-e> <end>
+
+" visual shifting (does not exit Visual mode)
+" vnoremap < <gv
+" vnoremap > >gv 
+
+" Generic highlight changes
+highlight Comment cterm=none ctermfg=Gray
+highlight IncSearch cterm=none ctermfg=Black ctermbg=DarkYellow
+highlight Search cterm=none ctermfg=Black ctermbg=DarkYellow
+highlight String cterm=none ctermfg=DarkGreen
+highlight treeDir cterm=none ctermfg=Cyan
+highlight treeUp cterm=none ctermfg=DarkYellow
+highlight treeCWD cterm=none ctermfg=DarkYellow
+highlight netrwDir cterm=none ctermfg=Cyan
+
+"
+" Per http://vim.sourceforge.net/tips/tip.php?tip_id=330
+" this will stop the annoying html indentation.
+" xmledit does some things for us, and combined with autoindent that's
+" probably enough.
+"
+autocmd BufEnter *.erb,*.haml,*.htm,*.html,*.kid,*.php,*.rhtml,*.xml,*.xsd setlocal indentexpr= autoindent shiftwidth=2
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugins
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""" 
+" vundle
+"
+"""
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+" vundle 管理的插件列表必须位于 vundle#begin() 和 vundle#end() 之间
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+"" 主题风格
+Plugin 'tomasr/molokai' " 多彩 molokai
+Plugin 'acarapetis/vim-colors-github' " Github风格(只有light模式)
+Plugin 'vim-scripts/peaksea'
+" other Plugin goes here ...
+
+"" Fuzzy file, buffer, mru, tag, etc finder.
+Plugin 'ctrlpvim/ctrlp.vim'
+
+"" tagbar
+Plugin 'majutsushi/tagbar'
+
+""" 
+" ctrlsf
+" An ack.vim alternative mimics Ctrl-Shift-F on Sublime Text 2
+"
+"""
+Plugin 'dyng/ctrlsf.vim'
+
+"" commeter
+Plugin 'scrooloose/nerdcommenter'
+" 注释的时候自动加个空格, 强迫症必配
+let g:NERDSpaceDelims=1
+
+call vundle#end()
+filetype plugin indent on
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+"" 配色方案
+set background=dark
+"colorscheme molokai
+colorscheme peaksea
+"colorscheme github
+
+
+"""
+" ctrlp. Make sure you have ack, ag or pt installed.
+"
+" ctrl + j/k 进行上下选择
+" ctrl + x 在当前窗口水平分屏打开文件
+" ctrl + v 同上, 垂直分屏
+" ctrl + t 在tab中打开
+"
+"""
+let g:ctrlp_map = '<leader>p' " 模糊搜索当前目录及其子目录下的所有文件
+let g:ctrlp_cmd = 'CtrlP'
+map <leader>f :CtrlPMRU<CR> " Fuzzy finder for Most Recently Used file(MRU)
+let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
+    \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc)$',
+    \ }
+let g:ctrlp_working_path_mode=0
+let g:ctrlp_match_window_bottom=1
+let g:ctrlp_max_height=15
+let g:ctrlp_match_window_reversed=0
+let g:ctrlp_mruf_max=500
+let g:ctrlp_follow_symlinks=1
+
+"""
+"
+" tagbar
+"
+"""
+"let tagbar_left=1 
+" 设置显示／隐藏标签列表子窗口的快捷键。速记：identifier list by tag
+nnoremap <Leader>tb :TagbarToggle<CR> 
+" 设置标签子窗口的宽度 
+let tagbar_width=32 
+" tagbar 子窗口中不显示冗余帮助信息 
+let g:tagbar_compact=1
+" 设置 ctags 对哪些代码标识符生成标签
+let g:tagbar_type_cpp = {
+    \ 'kinds' : [
+         \ 'c:classes:0:1',
+         \ 'd:macros:0:1',
+         \ 'e:enumerators:0:0', 
+         \ 'f:functions:0:1',
+         \ 'g:enumeration:0:1',
+         \ 'l:local:0:1',
+         \ 'm:members:0:1',
+         \ 'n:namespaces:0:1',
+         \ 'p:functions_prototypes:0:1',
+         \ 's:structs:0:1',
+         \ 't:typedefs:0:1',
+         \ 'u:unions:0:1',
+         \ 'v:global:0:1',
+         \ 'x:external:0:1'
+     \ ],
+     \ 'sro'        : '::',
+     \ 'kind2scope' : {
+         \ 'g' : 'enum',
+         \ 'n' : 'namespace',
+         \ 'c' : 'class',
+         \ 's' : 'struct',
+         \ 'u' : 'union'
+     \ },
+     \ 'scope2kind' : {
+         \ 'enum'      : 'g',
+         \ 'namespace' : 'n',
+         \ 'class'     : 'c',
+         \ 'struct'    : 's',
+         \ 'union'     : 'u'
+     \ }
+\ }
+
+
+"""
+" nerdcommenter
+" 使用默认的快捷键, 不需要自己绑定
+"""
+"<leader>cc   		" 加注释
+"<leader>cu   		" 解开注释
+"<leader>c<space>  	" 加上/解开注释, 智能判断
+"<leader>cy   		" 先复制, 再注解(p可以进行黏贴)
+
+"""
+" ctrlsf
+"
+" 在工程内全局查找光标所在关键字
+"
+"""
+nnoremap <Leader>sf :CtrlSF<CR>
+
