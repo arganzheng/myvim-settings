@@ -372,19 +372,30 @@ colorscheme peaksea
 " ctrl + t 在tab中打开
 "
 """
-let g:ctrlp_map = '<leader>p' " 模糊搜索当前目录及其子目录下的所有文件
+let g:ctrlp_map = '<c-p>' " 模糊搜索当前目录及其子目录下的所有文件
 let g:ctrlp_cmd = 'CtrlP'
-map <leader>f :CtrlPMRU<CR> " Fuzzy finder for Most Recently Used file(MRU)
+
+map <leader>mru :CtrlPMRU<CR> " Fuzzy finder for Most Recently Used file(MRU)
+map <leader>b :CtrlPBuffer<CR>
+
+" let g:ctrlp_user_command = 'find %s -type f'        " MacOSX/Linux
+" let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'  " Windows
+
+"" set wildignore file
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
     \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc)$',
     \ }
+" Search from current directory instead of project root
 let g:ctrlp_working_path_mode=0
+" Set no max file limit
+let g:ctrlp_max_files = 0
 let g:ctrlp_match_window_bottom=1
 let g:ctrlp_max_height=15
 let g:ctrlp_match_window_reversed=0
 let g:ctrlp_mruf_max=500
 let g:ctrlp_follow_symlinks=1
+
 
 """
 "
