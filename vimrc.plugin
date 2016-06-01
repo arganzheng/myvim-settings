@@ -114,20 +114,11 @@ set ruler               " Show cursor location
 set relativenumber		" it tells me what number I need to use with motion commands like d<NUMBER>d.
 set undofile
 
-" I want the text width to be 79, and for it to wrap. 
-" These lines manage my line wrapping settings and also show a colored column at
-" 85 characters (so I can see when I write a too-long line of code).
 set wrap
 set textwidth=79
 set linebreak
 set showbreak=↪
 set formatoptions=qrn1
-
-if exists('+colorcolumn')
-    set colorcolumn=85
-else
-    au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>85v.\+', -1)
-endif
 
 " This makes Vim show invisible characters with the same characters that
 " TextMate uses. You might need to adjust your color scheme so they’re not too
